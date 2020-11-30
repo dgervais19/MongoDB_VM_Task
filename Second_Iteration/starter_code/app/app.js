@@ -4,34 +4,34 @@ var exec = require('child_process').exec;
 var mongoose = require('mongoose');
 var Post = require('./models/post');
 
-app.set('view engine' , 'ejs');
+app.set('view engine', 'ejs');
 
 app.use(express.static('public'));
 
-app.get('/' , function(req , res){
+app.get('/', function(req, res) {
 
-  res.render("index");
+    res.render("index");
 
 });
 
 // connect to database
-if(process.env.DB_HOST) {
-  mongoose.connect(process.env.DB_HOST);
+if (process.env.DB_HOST) {
+    mongoose.connect(process.env.DB_HOST);
 
-  app.get("/posts" , function(req,res){
-      Post.find({} , function(err, posts){
-        if(err) return res.send(err);
-        res.render("posts/index" , {posts:posts});
-      })
-  });
+    app.get("/posts", function(req, res) {
+        Post.find({}, function(err, posts) {
+            if (err) return res.send(err);
+            res.render("posts/index", { posts: posts });
+        })
+    });
 }
 
-app.get('/fibonacci/:n' , function(req,res){
+app.get('/fibonacci/:n', function(req, res) {
 
-  // high cpu usage function
-  var value = fibonacci(req.params.n);
+    // high cpu usage function
+    var value = fibonacci(req.params.n);
 
-  res.render("fibonacci" , {index:req.params.n, value:value});
+    res.render("fibonacci", { index: req.params.n, value: value });
 });
 
 // app.get("/hack/:command" , function(req,res){
@@ -41,21 +41,21 @@ app.get('/fibonacci/:n' , function(req,res){
 //   });
 // });
 
-app.listen(3000 , function(){
-  console.log('Your app is ready and listening on port 3000');
+app.listen(3000, function() {
+    console.log('Your app is ready and listening on port 3000');
 });
 
 
 // deliberately poorly implemented fibonnaci
 function fibonacci(n) {
 
-  if(n == 0)
-    return 0;
+    if (n == 0)
+        return 0;
 
-  if(n == 1)
-    return 1;
+    if (n == 1)
+        return 1;
 
-  return fibonacci(n - 1) + fibonacci(n - 2);
+    return fibonacci(n - 1) + fibonacci(n - 2);
 
 }
 
